@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+const API_KEY = 'AIzaSyBL4ux4AJhCi2NWnrPMcg80ENoVC5NoOGM';
 
-const title = 'My Minimal React Webpack Babel Setup good job';
 
 ReactDOM.render(
     <div>{title}</div>,
