@@ -3,10 +3,23 @@ import ReactDOM from 'react-dom';
 import SearchBar from './components/search_bar';
 import VideoDetail from './components/video_detail';
 import VideoList from './components/video_list';
-const API_KEY = 'AIzaSyBL4ux4AJhCi2NWnrPMcg80ENoVC5NoOGM';
+import SearchYoutube from 'youtube-api-v3-search';
+const API_KEY = '';
 
 
 class App extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            videos:[]
+        };
+        SearchYoutube({key:API_KEY,term:'surfboards'},function (data) {
+            console.log(data);
+        })
+
+
+    }
     render() {
         return (
             <div className="row">
