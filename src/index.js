@@ -4,32 +4,52 @@ import SearchBar from './components/search_bar';
 import VideoDetail from './components/video_detail';
 import VideoList from './components/video_list';
 import SearchYoutube from 'youtube-api-v3-search';
-const API_KEY = '';
+
 
 
 class App extends Component {
 
     constructor(props){
+        console.log(API_KEY);
         super(props);
         this.state = {
-            videos:[]
+            videos:[],
+            selectedVideo:null,
         };
-        SearchYoutube({key:API_KEY,term:'surfboards'},function (data) {
-            console.log(data);
+
+       // let result = await searchYoutube($YOUTUBE_KEY,options);
+
+        this.videoSearch('nodejs');
+
+    }
+
+    videoSearch(term){
+        var self = this;
+        SearchYoutube(process.env.API_KEY,{
+            q:term,
+        },function (data,result) {
+            if(data==null){
+                self.setState({
+                    videos:result.items,
+                    selectedVideo:result.items[0]
+                });
+
+            }
+
         })
-
-
     }
     render() {
         return (
             <div className="row">
                 <div className="col-md-12">
-                    <SearchBar/>
+                    <SearchBar nowText={"nodejs"} onSearchTermChange={term=>this.videoSearch(term)} />
                 </div>
                 <div className="col-md-12 myPadding">
                     <div className="row">
-                        <VideoDetail/>
-                        <VideoList/>
+                        <VideoDetail video={this.state.selectedVideo}/>
+                        <VideoList
+                            onVideoSelect={selectedVideo=>this.setState({selectedVideo})}
+                            videos={this.state.videos}/>
                     </div>
                 </div>
             </div>

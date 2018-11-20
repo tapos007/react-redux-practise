@@ -5,17 +5,22 @@ class SearchBar extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {searchValue: ''};
+        this.state = {searchValue: this.props.nowText};
         // this.onInputChange = this.onInputChange.bind(this);
     }
 
-    // onInputChange(event) {
-    //     this.setState({searchValue: event.target.value});
-    // }
+    onInputChange(value) {
+
+        this.setState({searchValue: value});
+        if(value.length>4){
+            this.props.onSearchTermChange(value)
+        }
+
+    }
 
     render() {
         return (
-            <input className="form-control form-control-lg" value={this.state.searchValue} onChange={event =>this.setState({searchValue: event.target.value}) } type="text" placeholder="search"/>
+            <input className="form-control form-control-lg" value={this.state.searchValue} onChange={event =>this.onInputChange(event.target.value) } type="text" placeholder="search"/>
         );
     }
 }
